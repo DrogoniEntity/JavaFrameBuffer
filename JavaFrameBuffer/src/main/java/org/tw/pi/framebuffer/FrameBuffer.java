@@ -324,6 +324,7 @@ public class FrameBuffer {
 
 	private long	lastUpdate;
 	private	int		updateCount;
+	private float fps;
 
 	/**
 	 * Update the screen if no automatic sync is used (see constructor autoUpdate flag).
@@ -349,8 +350,7 @@ public class FrameBuffer {
 				long diff = now - lastUpdate;
 
 				if (diff >= 1000) {
-					float fps = (1000f / diff) * updateCount;
-//					System.err.println("FPS = "+fps);
+					fps = (1000f / diff) * updateCount;
 					updateCount = 0;
 					lastUpdate  = now;
 				}
@@ -384,6 +384,13 @@ public class FrameBuffer {
 		return height;
 	}
 
+	// -----------------------------------------------------------------------------------------------------------------
+	
+	public float getFPS()
+	{
+	    return this.fps;
+	}
+	
 	// -----------------------------------------------------------------------------------------------------------------
 
 }    // of class
