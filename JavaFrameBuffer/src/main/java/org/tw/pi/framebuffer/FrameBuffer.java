@@ -225,15 +225,19 @@ public class FrameBuffer {
 
 		@Override
 		public void run() {
-			final int SLEEP_TIME = 1000 / FPS;
+			final int TARGETED_SLEEP_TIME = 1000 / FPS;
+			
+			long timeStart;
+			long timeElapsed;
 
 			// System.err.println("Run Update");
 			while (deviceInfo != 0) {
-
+			        timeStart = System.currentTimeMillis();
 				updateScreen();
-
+				timeElapsed = System.currentTimeMillis() - timeStart;
 				try {
-					sleep(SLEEP_TIME);
+				    if (timeElapsed < TARGETED_SLEEP_TIME)
+					sleep(TARGETED_SLEEP_TIME - timeElapsed);
 				} catch (InterruptedException e) {
 					break;
 				}
@@ -268,16 +272,21 @@ public class FrameBuffer {
 
 		@Override
 		public void run() {
-			final int SLEEP_TIME = 1000 / FPS;
+    		        final int TARGETED_SLEEP_TIME = 1000 / FPS;
+                        
+                        long timeStart;
+                        long timeElapsed;
 
 			try {
-				System.err.println("Run Repaint");
 				while (deviceInfo != 0) {
 
 					repaintQueue.take();
-					updateScreen();
-
-					sleep(SLEEP_TIME);
+					timeStart = System.currentTimeMillis();
+	                                updateScreen();
+	                                timeElapsed = System.currentTimeMillis() - timeStart;
+	                                
+	                                if (timeElapsed < TARGETED_SLEEP_TIME)
+	                                    sleep(TARGETED_SLEEP_TIME - timeElapsed);
 
 				}    // while
 			} catch (InterruptedException e) {
