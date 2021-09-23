@@ -49,7 +49,7 @@ import javax.swing.JPanel;
  */
 public class FrameBuffer {
 
-	private static final int FPS = 40;        // Max. update rate
+	private static final int FPS = 60;        // Max. update rate
 
 	private String deviceName;
 
